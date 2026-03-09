@@ -1,5 +1,6 @@
-# Extrae todas las extensiones(sin duplicados)
 import os
+
+# Extrae todas las extensiones(sin duplicados)
 
 files = [
     "notas.txt",

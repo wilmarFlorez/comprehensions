@@ -1,3 +1,5 @@
+import os
+
 # Un diccionario que mapea cada archivo a su extensión
 # Salida esperada:
 """
@@ -8,7 +10,6 @@ readme.md       -> .md
 app.py          -> .py
 """
 
-import os
 
 files = ["script.py", "foto.png", "datos.csv", "readme.md", "app.py"]
 

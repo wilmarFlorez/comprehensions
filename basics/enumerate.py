@@ -1,5 +1,4 @@
 # enumerate() agrega un contador automatico al iterable
-
 # Listar los archivos de un directorio numerados.
 
 files = ["readme.md", "script.py", "foto.png", "datos.csv", "config.json"]

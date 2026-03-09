@@ -1,6 +1,5 @@
-# Extrae el nombre del archivo
-
 import os
+# Extrae el nombre del archivo
 
 routes = [
     "/home/user/docs/notas.txt",
