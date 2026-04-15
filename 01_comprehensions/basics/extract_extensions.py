@@ -15,7 +15,7 @@ files = [
 
 extensions = [os.path.splitext(f)[1] for f in files]
 
-# Elimina duplicados usando un set
-uniques = list(set(extensions))
+# Elimina duplicados usando un set y ordena
+uniques = sorted(set(extensions))
 
 print(uniques)

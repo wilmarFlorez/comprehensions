@@ -1,7 +1,7 @@
 [project]
-name = "comprehensions"
-version = "0.1.0"
-description = "Add your description here"
+name = "python-mastery"
+version = "0.2.0"
+description = "Práctica progresiva de Python con repetición espaciada — de cero a master"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []

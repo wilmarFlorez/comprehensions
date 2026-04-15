@@ -1,203 +1,150 @@
-# ============================================================
-#  PRÁCTICA CON AUTO-VERIFICACIÓN
-#  Escribe tu solución donde dice "___" y ejecuta el archivo.
-#  Los asserts te dirán si acertaste o no.
-# ============================================================
+#!/usr/bin/env python3
+"""
+Sistema de práctica diaria con repetición espaciada.
+Ejecuta: python practice.py
 
-passed = 0
-total = 10
+Selecciona ejercicios aleatorios de todos los módulos,
+priorizando los que no has practicado recientemente.
+"""
+import json
+import random
+import subprocess
+import sys
+from datetime import datetime
+from pathlib import Path
 
-# Ejercicio 1: enumerate
-# Listar los archivos de un directorio numerados.
-# Genera: [" 1: readme.md", " 2: script.py", ...]
+PROGRESS_FILE = Path(__file__).parent / "progress.json"
 
-files = ["readme.md", "script.py", "foto.png", "datos.csv", "config.json"]
-
-result_1 = ___  # tu solución aquí
-
-assert result_1 == [
-    " 1: readme.md",
-    " 2: script.py",
-    " 3: foto.png",
-    " 4: datos.csv",
-    " 5: config.json",
-], f"Ejercicio 1 falló: {result_1}"
-passed += 1
-print("✓ Ejercicio 1: enumerate — OK")
-
-
-# Ejercicio 2: extensiones únicas
-# Extrae todas las extensiones (sin duplicados) y ordénalas.
-
-files = [
-    "notas.txt",
-    "foto.png",
-    "script.py",
-    "readme.md",
-    "app.py",
-    "data.csv",
-    "banner.png",
-]
-
-result_2 = ___  # tu solución aquí
-
-assert result_2 == [".csv", ".md", ".png", ".py", ".txt"], (
-    f"Ejercicio 2 falló: {result_2}"
-)
-passed += 1
-print("✓ Ejercicio 2: extensiones únicas — OK")
-
-
-# Ejercicio 3: extraer nombres de rutas
-# Extrae el nombre del archivo de cada ruta.
-
-routes = [
-    "/home/user/docs/notas.txt",
-    "/home/user/imgs/foto.png",
-    "/home/user/code/script.py",
-]
-
-result_3 = ___  # tu solución aquí
-
-assert result_3 == ["notas.txt", "foto.png", "script.py"], (
-    f"Ejercicio 3 falló: {result_3}"
-)
-passed += 1
-print("✓ Ejercicio 3: extraer nombres — OK")
-
-
-# Ejercicio 4: filtrar .py
-# Extrae solo los archivos .py
-
-files = ["notas.txt", "foto.png", "script.py", "readme.md", "app.py", "data.csv"]
-
-result_4 = ___  # tu solución aquí
-
-assert result_4 == ["script.py", "app.py"], f"Ejercicio 4 falló: {result_4}"
-passed += 1
-print("✓ Ejercicio 4: filtrar .py — OK")
-
-
-# Ejercicio 5: etiquetar archivos
-# Si termina en .py -> "código", si no -> "dato"
-
-files = ["script.py", "datos.csv", "app.py", "reporte.csv", "utils.py"]
-
-result_5 = ___  # tu solución aquí
-
-assert result_5 == [
-    ("script.py", "código"),
-    ("datos.csv", "dato"),
-    ("app.py", "código"),
-    ("reporte.csv", "dato"),
-    ("utils.py", "código"),
-], f"Ejercicio 5 falló: {result_5}"
-passed += 1
-print("✓ Ejercicio 5: etiquetar archivos — OK")
-
-
-# Ejercicio 6: filtrar imágenes + mayúsculas
-# Filtrar archivos .png o .jpg y transformar a mayúsculas.
-
-files = ["notas.txt", "foto.png", "script.py", "banner.jpg", "app.py", "icono.png"]
-
-result_6 = ___  # tu solución aquí
-
-assert result_6 == ["FOTO.PNG", "BANNER.JPG", "ICONO.PNG"], (
-    f"Ejercicio 6 falló: {result_6}"
-)
-passed += 1
-print("✓ Ejercicio 6: imágenes en mayúsculas — OK")
-
-
-# Ejercicio 7: reporte desde diccionario
-# Genera líneas tipo: "script.py       -> 2.1 KB"
-
-metadata = {
-    "script.py": "2.1 KB",
-    "foto.png": "840 KB",
-    "notas.txt": "12 KB",
-    "readme.md": "4.3 KB",
+MODULES = {
+    "01_comprehensions": "Comprehensions y iteración",
+    "02_functions": "Funciones, closures, decorators",
+    "03_oop": "OOP, dataclasses, dunder methods",
+    "04_iterators": "Iteradores, generators, itertools",
+    "05_error_handling": "Excepciones y context managers",
+    "06_concurrency": "Async, threading, multiprocessing",
+    "07_testing": "Pytest, fixtures, mocks",
+    "08_data_structures": "Collections, heapq, bisect",
+    "09_typing": "Type hints, Protocol, generics",
+    "10_patterns": "Design patterns pythónicos",
 }
 
-result_7 = ___  # tu solución aquí
 
-assert result_7 == [
-    "script.py       -> 2.1 KB",
-    "foto.png        -> 840 KB",
-    "notas.txt       -> 12 KB",
-    "readme.md       -> 4.3 KB",
-], f"Ejercicio 7 falló: {result_7}"
-passed += 1
-print("✓ Ejercicio 7: reporte desde dict — OK")
+def load_progress() -> dict:
+    if PROGRESS_FILE.exists():
+        return json.loads(PROGRESS_FILE.read_text())
+    return {"history": {}, "streaks": {"current": 0, "best": 0, "last_date": None}}
 
 
-# Ejercicio 8: dict comp — archivo -> extensión
-# Crea un diccionario que mapee cada archivo a su extensión.
-
-files = ["script.py", "foto.png", "datos.csv", "readme.md", "app.py"]
-
-result_8 = ___  # tu solución aquí
-
-assert result_8 == {
-    "script.py": ".py",
-    "foto.png": ".png",
-    "datos.csv": ".csv",
-    "readme.md": ".md",
-    "app.py": ".py",
-}, f"Ejercicio 8 falló: {result_8}"
-passed += 1
-print("✓ Ejercicio 8: dict archivo->extensión — OK")
+def save_progress(progress: dict):
+    PROGRESS_FILE.write_text(json.dumps(progress, indent=2, ensure_ascii=False))
 
 
-# Ejercicio 9: aplanar directorios
-# Todos los archivos en una sola lista.
-
-directories = {
-    "docs": ["notas.txt", "readme.md", "informe.pdf"],
-    "imgs": ["foto.png", "banner.jpg"],
-    "code": ["script.py", "app.py", "utils.py"],
-}
-
-result_9 = ___  # tu solución aquí
-
-assert result_9 == [
-    "notas.txt",
-    "readme.md",
-    "informe.pdf",
-    "foto.png",
-    "banner.jpg",
-    "script.py",
-    "app.py",
-    "utils.py",
-], f"Ejercicio 9 falló: {result_9}"
-passed += 1
-print("✓ Ejercicio 9: aplanar directorios — OK")
+def get_stale_modules(progress: dict, top_n: int = 3) -> list[str]:
+    """Retorna los módulos menos practicados recientemente."""
+    history = progress.get("history", {})
+    scored = []
+    for mod in MODULES:
+        last = history.get(mod, {}).get("last_practiced", "2000-01-01")
+        count = history.get(mod, {}).get("times_practiced", 0)
+        scored.append((last, count, mod))
+    scored.sort()  # más antiguo primero
+    return [mod for _, _, mod in scored[:top_n]]
 
 
-# Ejercicio 10: zip — combinar nombre y tamaño
-# Combinar nombres con tamaños convertidos a KB (división entera // 1000).
+def update_streak(progress: dict):
+    today = datetime.now().strftime("%Y-%m-%d")
+    streaks = progress["streaks"]
+    last = streaks.get("last_date")
 
-names = ["script.py", "foto.png", "datos.csv", "readme.md"]
-sizes = [12_400, 840_000, 4_200, 3_100]
+    if last == today:
+        return  # ya practicó hoy
 
-result_10 = ___  # tu solución aquí
+    yesterday = (datetime.now().replace(hour=0) - __import__("datetime").timedelta(days=1)).strftime("%Y-%m-%d")
+    if last == yesterday:
+        streaks["current"] += 1
+    else:
+        streaks["current"] = 1
 
-assert result_10 == [
-    ("script.py", 12),
-    ("foto.png", 840),
-    ("datos.csv", 4),
-    ("readme.md", 3),
-], f"Ejercicio 10 falló: {result_10}"
-passed += 1
-print("✓ Ejercicio 10: zip nombres+tamaños — OK")
+    streaks["best"] = max(streaks["best"], streaks["current"])
+    streaks["last_date"] = today
 
 
-# ============================================================
-print(f"\n{'=' * 50}")
-print(f"  RESULTADO: {passed}/{total} ejercicios correctos")
-print(f"{'=' * 50}")
-if passed == total:
-    print("  ¡Perfecto! Todos los ejercicios completados.")
-else:
-    print(f"  Te faltan {total - passed} ejercicios. ¡Sigue intentando!")
+def show_dashboard(progress: dict):
+    streaks = progress["streaks"]
+    history = progress.get("history", {})
+
+    print("=" * 55)
+    print("  PYTHON MASTERY — Panel de progreso")
+    print("=" * 55)
+    print(f"  Racha actual: {streaks['current']} días | Mejor: {streaks['best']} días")
+    print()
+
+    for mod, desc in MODULES.items():
+        info = history.get(mod, {})
+        times = info.get("times_practiced", 0)
+        last = info.get("last_practiced", "nunca")
+        bar = "█" * min(times, 20)
+        status = f"{times:>3}x | último: {last}"
+        print(f"  {mod:<22} {bar:<20} {status}")
+
+    print()
+
+
+def run_module(module: str):
+    """Ejecuta el practice.py de un módulo."""
+    practice_file = Path(__file__).parent / module / "practice.py"
+    if not practice_file.exists():
+        print(f"  ⚠ {module}/practice.py no encontrado")
+        return False
+
+    print(f"\n{'─' * 55}")
+    print(f"  {module}: {MODULES.get(module, '')}")
+    print(f"{'─' * 55}\n")
+
+    result = subprocess.run(
+        [sys.executable, str(practice_file)],
+        cwd=str(practice_file.parent),
+    )
+    return result.returncode == 0
+
+
+def main():
+    progress = load_progress()
+
+    if "--dashboard" in sys.argv:
+        show_dashboard(progress)
+        return
+
+    if "--module" in sys.argv:
+        idx = sys.argv.index("--module")
+        if idx + 1 < len(sys.argv):
+            mod = sys.argv[idx + 1]
+            if mod in MODULES:
+                run_module(mod)
+                today = datetime.now().strftime("%Y-%m-%d")
+                history = progress.setdefault("history", {})
+                mod_info = history.setdefault(mod, {"times_practiced": 0})
+                mod_info["times_practiced"] += 1
+                mod_info["last_practiced"] = today
+                update_streak(progress)
+                save_progress(progress)
+            else:
+                print(f"Módulo '{mod}' no existe. Disponibles:")
+                for m, d in MODULES.items():
+                    print(f"  {m}: {d}")
+            return
+
+    # Modo interactivo: mostrar dashboard y sugerir
+    show_dashboard(progress)
+    stale = get_stale_modules(progress)
+
+    print("  Sugeridos para hoy (menos practicados):")
+    for i, mod in enumerate(stale, 1):
+        print(f"    {i}. {mod}: {MODULES[mod]}")
+
+    print(f"\n  Ejecuta: python practice.py --module {stale[0]}")
+    print(f"  Ver todo: python practice.py --dashboard")
+
+
+if __name__ == "__main__":
+    main()

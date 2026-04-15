@@ -14,7 +14,7 @@ sum(), any(), all(), max() consumen generators directamente.
 import random
 random.seed(42)
 
-files = [(f"log_{i:04d}.txt", random.randint(1_000, 500_000)) for i in range(10_1000)]
+files = [(f"log_{i:04d}.txt", random.randint(1_000, 500_000)) for i in range(10_000)]
 
 # ❌ List comp — carga 10.000 tamaños en RAM:
 # total = sum([t for _, t in archivos])
