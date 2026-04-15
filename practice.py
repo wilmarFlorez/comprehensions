@@ -7,7 +7,6 @@ Selecciona ejercicios aleatorios de todos los módulos,
 priorizando los que no has practicado recientemente.
 """
 import json
-import random
 import subprocess
 import sys
 from datetime import datetime
@@ -143,7 +142,7 @@ def main():
         print(f"    {i}. {mod}: {MODULES[mod]}")
 
     print(f"\n  Ejecuta: python practice.py --module {stale[0]}")
-    print(f"  Ver todo: python practice.py --dashboard")
+    print("  Ver todo: python practice.py --dashboard")
 
 
 if __name__ == "__main__":

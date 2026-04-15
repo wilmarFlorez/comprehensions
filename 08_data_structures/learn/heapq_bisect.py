@@ -1,9 +1,8 @@
 # ============================================================
 #  HEAPQ y BISECT — búsqueda y prioridad eficientes
 # ============================================================
-import heapq
 import bisect
-
+import heapq
 
 # heapq — min-heap (el menor siempre arriba)
 tasks = [(3, "email"), (1, "bug crítico"), (2, "review"), (1, "deploy")]

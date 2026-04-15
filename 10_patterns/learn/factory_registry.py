@@ -1,7 +1,6 @@
 # ============================================================
 #  FACTORY & REGISTRY — crear objetos sin if/elif chains
 # ============================================================
-from dataclasses import dataclass
 
 
 # Registry pattern — registrar clases por nombre

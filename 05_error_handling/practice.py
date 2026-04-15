@@ -107,7 +107,6 @@ ejercicio(6, "context manager clase",
 # Ejercicio 7: contextmanager decorator
 # Crea un context manager `suppress(*exceptions)` que suprima
 # las excepciones indicadas (como contextlib.suppress pero manual).
-from contextlib import contextmanager
 
 # @contextmanager
 # def suppress(*exceptions): ...
@@ -121,7 +120,6 @@ ejercicio(7, "suppress context manager",
 # Ejercicio 8: raise from
 # Crea load_json(text) que intente parsear JSON.
 # Si falla, lance ValueError("JSON inválido") FROM la excepción original.
-import json
 
 def load_json(text):
     ...  # tu solución aquí

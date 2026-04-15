@@ -47,6 +47,7 @@ def test_palindrome():
 # Parametrize — probar múltiples inputs
 import pytest
 
+
 @pytest.mark.parametrize("input,expected", [
     ("oso", True),
     ("python", False),

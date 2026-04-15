@@ -26,6 +26,7 @@ with Timer():
 # Context manager con contextlib
 from contextlib import contextmanager
 
+
 @contextmanager
 def temporary_value(obj, attr, new_value):
     """Cambia un atributo temporalmente y lo restaura al salir."""

@@ -3,8 +3,6 @@
 #  Escribe tu solución donde dice ... y ejecuta el archivo.
 # ============================================================
 import asyncio
-import time
-from concurrent.futures import ThreadPoolExecutor
 
 passed = 0
 total = 8

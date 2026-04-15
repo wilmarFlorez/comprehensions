@@ -1,7 +1,7 @@
 # ============================================================
 #  TYPE HINTS — lo esencial para código profesional
 # ============================================================
-from typing import Optional, Union
+from typing import Optional
 
 
 # Básico: funciones
@@ -44,6 +44,7 @@ users: UserMap = {1: "Alice", 2: "Bob"}
 
 # Callable
 from typing import Callable
+
 
 def apply_twice(func: Callable[[int], int], value: int) -> int:
     return func(func(value))

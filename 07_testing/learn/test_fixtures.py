@@ -2,8 +2,9 @@
 #  FIXTURES Y MOCKS
 #  Ejecuta: python -m pytest 07_testing/learn/test_fixtures.py -v
 # ============================================================
-import pytest
 from unittest.mock import Mock, patch
+
+import pytest
 
 
 # Fixtures — setup reutilizable
@@ -55,6 +56,7 @@ def test_get_user_name():
 
 # Patch — reemplazar temporalmente un módulo/función
 import time
+
 
 def slow_function():
     time.sleep(5)

@@ -60,7 +60,6 @@ ejercicio(3, "yield from flatten",
 
 # Ejercicio 4: itertools.chain
 # Concatena tres listas sin crear una nueva lista intermedia.
-import itertools
 
 a = [1, 2, 3]
 b = [4, 5]
@@ -130,7 +129,6 @@ ejercicio(9, "pipeline de generators",
 
 # Ejercicio 10: zip_longest
 # Combina dos listas de distinta longitud, rellenando con "-".
-from itertools import zip_longest
 
 names = ["Alice", "Bob", "Charlie"]
 scores = [95, 87]

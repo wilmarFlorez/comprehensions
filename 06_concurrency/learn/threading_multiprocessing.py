@@ -3,9 +3,8 @@
 #  Threading: para I/O bound (archivos, red, DB)
 #  Multiprocessing: para CPU bound (cálculos pesados)
 # ============================================================
-import threading
 import time
-from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 
 
 # Threading — ejecutar I/O en paralelo

@@ -1,7 +1,7 @@
 # ============================================================
 #  functools — herramientas para funciones de orden superior
 # ============================================================
-from functools import partial, lru_cache, reduce
+from functools import lru_cache, partial, reduce
 
 
 # partial — fijar argumentos de una función

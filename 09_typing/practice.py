@@ -63,7 +63,6 @@ ejercicio(3, "Optional return",
 
 # Ejercicio 4: Callable como parámetro
 # Agrega type hints: transform recibe un Callable[[str], str] y una lista de strings.
-from typing import Callable
 
 def transform_all(func, items):  # hints: Callable[[str], str], list[str]) -> list[str]
     return [func(item) for item in items]
@@ -93,7 +92,6 @@ ejercicio(5, "TypeVar genérico",
 # Ejercicio 6: Protocol
 # Crea un Protocol `HasName` con atributo `name: str`.
 # Crea una función get_names(items: list[HasName]) -> list[str].
-from typing import Protocol
 
 # class HasName(Protocol): ...
 # def get_names(items): ...
@@ -118,7 +116,6 @@ ejercicio(7, "Union types",
 
 # Ejercicio 8: TypedDict
 # Crea un TypedDict para un User con name: str y age: int.
-from typing import TypedDict
 
 # class User(TypedDict): ...
 

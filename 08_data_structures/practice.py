@@ -2,7 +2,6 @@
 #  PRÁCTICA — DATA STRUCTURES
 #  Escribe tu solución donde dice ... y ejecuta el archivo.
 # ============================================================
-from collections import Counter, deque, defaultdict
 
 passed = 0
 total = 10
@@ -75,7 +74,6 @@ ejercicio(5, "defaultdict agrupar",
 
 # Ejercicio 6: heapq — top N
 # Encuentra los 3 números más grandes de la lista.
-import heapq
 
 nums_6 = [42, 17, 93, 8, 55, 71, 3, 88]
 
@@ -99,7 +97,6 @@ ejercicio(7, "heapq merge",
 
 # Ejercicio 8: bisect — insertar ordenado
 # Inserta 35 en [10, 20, 30, 40, 50] y retorna la lista resultante.
-import bisect
 
 ejercicio(8, "bisect insort",
     lambda: ...,
@@ -109,7 +106,6 @@ ejercicio(8, "bisect insort",
 
 # Ejercicio 9: namedtuple
 # Crea un namedtuple Color(r, g, b) y retorna la suma de sus componentes.
-from collections import namedtuple
 
 ejercicio(9, "namedtuple Color",
     lambda: ...,  # Color(255, 128, 0) -> sum

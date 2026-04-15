@@ -2,7 +2,6 @@
 #  STRATEGY PATTERN — cambiar comportamiento en runtime
 #  En Python no necesitas clases: una función es suficiente.
 # ============================================================
-from dataclasses import dataclass
 
 
 # Con funciones (forma pytónica)
@@ -55,7 +54,7 @@ class EventEmitter:
 store = EventEmitter()
 
 store.on("sale", lambda item, price: print(f"  📧 Email: {item} vendido por ${price}"))
-store.on("sale", lambda item, price: print(f"  📊 Analytics: venta registrada"))
+store.on("sale", lambda item, price: print("  📊 Analytics: venta registrada"))
 store.on("sale", lambda item, price: print(f"  📦 Inventario: {item} -1"))
 
 print("\nVenta registrada:")

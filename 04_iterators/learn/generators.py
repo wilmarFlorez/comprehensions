@@ -25,6 +25,7 @@ def fibonacci():
 
 # Tomar los primeros 10
 from itertools import islice
+
 print(list(islice(fibonacci(), 10)))  # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 
 

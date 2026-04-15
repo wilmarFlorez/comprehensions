@@ -50,6 +50,7 @@ ejercicio(2, "observer EventEmitter",
 # make_shape("rect", w=4, h=3) -> {"type": "rect", "w": 4, "h": 3, "area": 12}
 import math
 
+
 def make_shape(shape_type, **kwargs):
     ...  # tu solución aquí
 

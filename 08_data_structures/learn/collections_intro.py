@@ -1,8 +1,7 @@
 # ============================================================
 #  COLLECTIONS — estructuras de datos especializadas
 # ============================================================
-from collections import Counter, deque, namedtuple, defaultdict
-
+from collections import Counter, defaultdict, deque, namedtuple
 
 # Counter — contar ocurrencias
 words = "the quick brown fox jumps over the lazy dog the fox".split()
