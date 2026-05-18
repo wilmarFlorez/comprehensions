@@ -11,5 +11,8 @@ wheels/
 # Progress tracking (personal)
 progress.json
 
+# Working copies of exercises (regenerable from practice_template.py)
+[0-9][0-9]_*/practice.py
+
 # Virtual environments
 .venv

@@ -89,11 +89,40 @@ def show_dashboard(progress: dict):
     print()
 
 
+def _module_paths(module: str) -> tuple[Path, Path]:
+    """Retorna (template, working) para un módulo."""
+    module_dir = Path(__file__).parent / module
+    return module_dir / "practice_template.py", module_dir / "practice.py"
+
+
+def ensure_working_copy(module: str) -> Path | None:
+    """Garantiza que existe el working copy. Lo crea desde el template si falta."""
+    template, working = _module_paths(module)
+    if working.exists():
+        return working
+    if not template.exists():
+        print(f"  ⚠ {module}/practice_template.py no encontrado")
+        return None
+    working.write_text(template.read_text())
+    print(f"  ✱ Working copy creado: {module}/practice.py (desde template)")
+    return working
+
+
+def reset_module(module: str) -> bool:
+    """Sobreescribe el working copy desde el template."""
+    template, working = _module_paths(module)
+    if not template.exists():
+        print(f"  ⚠ {module}/practice_template.py no encontrado")
+        return False
+    working.write_text(template.read_text())
+    print(f"  ✓ Reset: {module}/practice.py")
+    return True
+
+
 def run_module(module: str):
-    """Ejecuta el practice.py de un módulo."""
-    practice_file = Path(__file__).parent / module / "practice.py"
-    if not practice_file.exists():
-        print(f"  ⚠ {module}/practice.py no encontrado")
+    """Ejecuta el practice.py de un módulo (crea working copy si falta)."""
+    practice_file = ensure_working_copy(module)
+    if practice_file is None:
         return False
 
     print(f"\n{'─' * 55}")
@@ -112,6 +141,21 @@ def main():
 
     if "--dashboard" in sys.argv:
         show_dashboard(progress)
+        return
+
+    if "--reset" in sys.argv:
+        idx = sys.argv.index("--reset")
+        if idx + 1 >= len(sys.argv):
+            print("Uso: python practice.py --reset <módulo|all>")
+            return
+        target = sys.argv[idx + 1]
+        if target == "all":
+            for m in MODULES:
+                reset_module(m)
+        elif target in MODULES:
+            reset_module(target)
+        else:
+            print(f"Módulo '{target}' no existe. Disponibles: {', '.join(MODULES)}, all")
         return
 
     if "--module" in sys.argv:
@@ -141,8 +185,9 @@ def main():
     for i, mod in enumerate(stale, 1):
         print(f"    {i}. {mod}: {MODULES[mod]}")
 
-    print(f"\n  Ejecuta: python practice.py --module {stale[0]}")
-    print("  Ver todo: python practice.py --dashboard")
+    print(f"\n  Ejecuta:    python practice.py --module {stale[0]}")
+    print(f"  Resetear:   python practice.py --reset {stale[0]}")
+    print("  Ver todo:   python practice.py --dashboard")
 
 
 if __name__ == "__main__":
